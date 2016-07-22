@@ -16,4 +16,5 @@ var mIo = require('../')
 
 describe('m-io:', function () {
   // body
+  mIo
 })
