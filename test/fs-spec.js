@@ -15,6 +15,7 @@
 
 var mfs = require('../fs.js')
 var fs = require('fs')
+var Q = require('q')
 
 var chai = require('chai')
 var chaiAsPromised = require('chai-as-promised')
@@ -26,7 +27,7 @@ describe('m-io/fs', function () {
     const sort = (x) => x.sort()
 
     it('should return a file listing as array', function () {
-      return mfs.listTree('test/fixtures').then((x) => x.sort()).should.eventually.deep.equal([
+      return mfs.listTree('test/fixtures').then(sort).should.eventually.deep.equal([
         'test/fixtures',
         'test/fixtures/tree',
         'test/fixtures/tree/a',
@@ -38,7 +39,9 @@ describe('m-io/fs', function () {
     })
 
     it('should apply the filter to all entries (stats)', function () {
-      const filter = (name, stat) => stat.isFile()
+      const filter = function (name, stat) {
+        return stat.isFile()
+      }
       return mfs.listTree('test/fixtures', filter).then(sort).should.eventually.deep.equal([
         'test/fixtures/tree/a/b/c.txt',
         'test/fixtures/tree/a/bb/cc.txt'
@@ -46,7 +49,9 @@ describe('m-io/fs', function () {
     })
 
     it('should apply the filter to all entries (name)', function () {
-      const filter = (name, stat) => name !== 'test/fixtures/tree/a/bb'
+      const filter = function (name, stat) {
+        return name !== 'test/fixtures/tree/a/bb'
+      }
       return mfs.listTree('test/fixtures', filter).then(sort).should.eventually.deep.equal([
         'test/fixtures',
         'test/fixtures/tree',
@@ -75,11 +80,11 @@ describe('m-io/fs', function () {
     })
 
     it('should read the file contents as Buffer in binary mode', function () {
-      return mfs.read('test/fixtures/tree/a/b/c.txt', 'b').should.eventually.deep.equal(Buffer.from('c', 'utf-8'))
+      return mfs.read('test/fixtures/tree/a/b/c.txt', 'b').should.eventually.deep.equal(new Buffer('c', 'utf-8'))
     })
 
     it('should read the file contents as Buffer in binary mode (options-object)', function () {
-      return mfs.read('test/fixtures/tree/a/b/c.txt', {flags: 'b'}).should.eventually.deep.equal(Buffer.from('c', 'utf-8'))
+      return mfs.read('test/fixtures/tree/a/b/c.txt', {flags: 'b'}).should.eventually.deep.equal(new Buffer('c', 'utf-8'))
     })
   })
 
@@ -89,11 +94,15 @@ describe('m-io/fs', function () {
       require('mkdirp').sync('tmp/test')
     })
     it('should write the file contents', function () {
-      return mfs.write('tmp/test/a.txt', 'a').then(() => readSync('tmp/test/a.txt')).should.eventually.equal('a')
+      return mfs.write('tmp/test/a.txt', 'a').then(function () {
+        return readSync('tmp/test/a.txt')
+      }).should.eventually.equal('a')
     })
 
     it('should write the file contents as Buffer in binary mode', function () {
-      return mfs.write('tmp/test/c.txt', Buffer.from('c', 'utf-8')).then(() => readSync('tmp/test/c.txt')).should.eventually.deep.equal('c')
+      return mfs.write('tmp/test/c.txt', new Buffer('c', 'utf-8')).then(function () {
+        return readSync('tmp/test/c.txt')
+      }).should.eventually.deep.equal('c')
     })
   })
 
@@ -103,18 +112,20 @@ describe('m-io/fs', function () {
       require('mkdirp').sync('tmp/test')
     })
     it('should create a directory with parents', function () {
-      return mfs.makeTree('tmp/test/make/tree/directory').then(() => fs.existsSync('tmp/test/make/tree/directory')).should.eventually.be.ok
+      return mfs.makeTree('tmp/test/make/tree/directory').then(function () {
+        return fs.existsSync('tmp/test/make/tree/directory')
+      }).should.eventually.be.ok
     })
 
     it('should create a directory with a given mode', function () {
       const result = mfs.makeTree('tmp/test/make/tree/directory700', 0o700)
-        .then(() => Promise.all([
+        .then(() => Q.all([
           // Only the last three octals are interesting
           fs.statSync('tmp/test/make').mode & 0o777,
           fs.statSync('tmp/test/make/tree').mode & 0o777,
           fs.statSync('tmp/test/make/tree/directory700').mode & 0o777
         ]))
-      return result.should.eventually.deep.equal([ 0o700, 0o700, 0o700 ])
+      return result.should.eventually.deep.equal([0o700, 0o700, 0o700])
     })
   })
 
@@ -123,7 +134,9 @@ describe('m-io/fs', function () {
       require('mkdirp').sync('tmp/test/remove/tree/directory')
     })
     it('should create a directory with parents', function () {
-      return mfs.removeTree('tmp/test/remove').then(() => fs.existsSync('tmp/test/remove')).should.eventually.be.false
+      return mfs.removeTree('tmp/test/remove').then(function () {
+        return fs.existsSync('tmp/test/remove')
+      }).should.eventually.be.false
     })
   })
 })
