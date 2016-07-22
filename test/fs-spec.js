@@ -122,16 +122,16 @@ describe('m-io/fs', function () {
     })
 
     it('should create a directory with a given mode', function () {
-      var result = mfs.makeTree('tmp/test/make/tree/directory700', 0o700)
+      var result = mfs.makeTree('tmp/test/make/tree/directory700', 448) // 0o700
         .then(function () {
           return Q.all([
             // Only the last three octals are interesting
-            fs.statSync('tmp/test/make').mode & 0o777,
-            fs.statSync('tmp/test/make/tree').mode & 0o777,
-            fs.statSync('tmp/test/make/tree/directory700').mode & 0o777
+            fs.statSync('tmp/test/make').mode & 511, // 0o777 to keep the last 3 octals
+            fs.statSync('tmp/test/make/tree').mode & 511,
+            fs.statSync('tmp/test/make/tree/directory700').mode & 511
           ])
         })
-      return result.should.eventually.deep.equal([0o700, 0o700, 0o700])
+      return result.should.eventually.deep.equal([448, 448, 448])
     })
   })
 
