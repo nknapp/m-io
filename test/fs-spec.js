@@ -24,7 +24,7 @@ chai.should()
 
 describe('m-io/fs', function () {
   describe('the list-tree function', function () {
-    const sort = (x) => x.sort()
+    var sort = (x) => x.sort()
 
     it('should return a file listing as array', function () {
       return mfs.listTree('test/fixtures').then(sort).should.eventually.deep.equal([
@@ -39,7 +39,7 @@ describe('m-io/fs', function () {
     })
 
     it('should apply the filter to all entries (stats)', function () {
-      const filter = function (name, stat) {
+      var filter = function (name, stat) {
         return stat.isFile()
       }
       return mfs.listTree('test/fixtures', filter).then(sort).should.eventually.deep.equal([
@@ -49,7 +49,7 @@ describe('m-io/fs', function () {
     })
 
     it('should apply the filter to all entries (name)', function () {
-      const filter = function (name, stat) {
+      var filter = function (name, stat) {
         return name !== 'test/fixtures/tree/a/bb'
       }
       return mfs.listTree('test/fixtures', filter).then(sort).should.eventually.deep.equal([
@@ -63,7 +63,7 @@ describe('m-io/fs', function () {
     })
 
     it('should not traverse dirs for which the filter returns null', function () {
-      const filter = (name, stat) => name === 'test/fixtures/tree/a/bb' ? null : true
+      var filter = (name, stat) => name === 'test/fixtures/tree/a/bb' ? null : true
       return mfs.listTree('test/fixtures', filter).then(sort).should.eventually.deep.equal([
         'test/fixtures',
         'test/fixtures/tree',
@@ -118,7 +118,7 @@ describe('m-io/fs', function () {
     })
 
     it('should create a directory with a given mode', function () {
-      const result = mfs.makeTree('tmp/test/make/tree/directory700', 0o700)
+      var result = mfs.makeTree('tmp/test/make/tree/directory700', 0o700)
         .then(() => Q.all([
           // Only the last three octals are interesting
           fs.statSync('tmp/test/make').mode & 0o777,

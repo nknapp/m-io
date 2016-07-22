@@ -43,7 +43,7 @@ module.exports = {
    * @param aPath
    */
   read: function read (aPath, options) {
-    const flags = optionsFrom(options).flags
+    var flags = optionsFrom(options).flags
     console.log(flags)
     return Q.ninvoke(fs, 'readFile', aPath, {
       encoding: flags === 'b' ? null : 'utf-8'
