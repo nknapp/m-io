@@ -11,12 +11,16 @@ var fs = require('fs')
 var Q = require('q')
 var path = require('path')
 
+/**
+ *
+ * @module
+ */
 module.exports = {
   /**
    * Custom implementation of [q-io/fs#listTree](http://documentup.com/kriskowal/q-io#listtreepath-guardpath-stat)
    * to avoid dependency on q-io
    * @param {string} directoryPath the base path
-   * @param {function(string,fs.Stats):boolean} filter a function that returns true, false or null to show that a file
+   * @param {function(string,fs.Stats):boolean=} filter a function that returns true, false or null to show that a file
    *  should be included or ignored and that a directory should be ignored completely (null)
    * @returns {Promise<string[]>} a promise for the collector, that is fulfilled after traversal
    */
@@ -26,7 +30,7 @@ module.exports = {
   /**
    * Replacement for [q-io/fs#makeTree](http://documentup.com/kriskowal/q-io#maketreepath-mode)
    * @param {string} aPath the directory to be created
-   * @param {number} mode (e.g. 0644)
+   * @param {number=} mode (e.g. 0644)
    */
   makeTree: function makeTree (aPath, mode) {
     return Q.nfcall(require('mkdirp'), aPath, {mode: mode})
@@ -40,6 +44,7 @@ module.exports = {
    */
   read: function read (aPath, options) {
     const flags = optionsFrom(options).flags
+    console.log(flags)
     return Q.ninvoke(fs, 'readFile', aPath, {
       encoding: flags === 'b' ? null : 'utf-8'
     })
@@ -69,13 +74,14 @@ module.exports = {
 /**
  * Coerce a flag-string `b` into an options-object `{ flags: 'ba' }` if necessary.
  * @param optionsOrFlags
+ * @private
  * @returns {*}
  */
 function optionsFrom (optionsOrFlags) {
   if (!optionsOrFlags) {
     return {}
   }
-  if (optionsOrFlags instanceof String) {
+  if (typeof optionsOrFlags === 'string') {
     return {
       flags: optionsOrFlags
     }
@@ -89,6 +95,7 @@ function optionsFrom (optionsOrFlags) {
  * @param {function(string,fs.Stats):boolean} filter a function that returns true, false or null to show that a file
  *  should be included or ignored and that a directory should be ignored completely (null)
  * @param {string[]} collector array to collect the filenames into
+ * @private
  * @returns {Promise<string[]>} a promise for the collector, that is fulfilled after traversal
  */
 function walk (directoryPath, filter, collector) {
@@ -97,29 +104,28 @@ function walk (directoryPath, filter, collector) {
     if (err) {
       return defer.reject(err)
     }
-    var filterResult = filter(directoryPath, stat)
+    // Call filter to get result, "true" if no filter is set
+    var filterResult = !filter || filter(directoryPath, stat)
     if (filterResult) {
       collector.push(directoryPath)
     }
-    if (stat.isDirectory()) {
-      // false/true => iterate directory
-      if (filterResult !== null) {
-        fs.readdir(directoryPath, function (err, filenames) {
-          if (err) {
-            return defer.reject(err)
-          }
-          var paths = filenames.map(function (name) {
-            return path.join(directoryPath, name)
-          })
-          // Walk all files/subdirs
-          Q.all(paths.map(function (filepath) {
-            return walk(filepath, filter, collector)
-          }))
-            .then(function () {
-              defer.fulfill(collector)
-            })
+    // false/true => iterate directory
+    if (stat.isDirectory() && filterResult !== null) {
+      fs.readdir(directoryPath, function (err, filenames) {
+        if (err) {
+          return defer.reject(err)
+        }
+        var paths = filenames.map(function (name) {
+          return path.join(directoryPath, name)
         })
-      }
+        // Walk all files/subdirs
+        Q.all(paths.map(function (filepath) {
+          return walk(filepath, filter, collector)
+        }))
+          .then(function () {
+            defer.fulfill(collector)
+          })
+      })
     } else {
       // No recursive call with a file
       defer.fulfill(collector)

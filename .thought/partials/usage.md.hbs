@@ -1,0 +1,16 @@
+{{#if (exists 'examples/example.js')}}
+ 
+## Usage
+
+The following example demonstrates how to use this module:
+
+{{{example 'examples/example.js'}}}
+
+This will generate the following output
+
+{{{exec 'node example.js' cwd='examples/'}}}
+{{/if}}
+
+After deleting `city/usa`, the `city`-subtree looks liks this:
+
+{{dirTree 'examples' 'city/**'}}

@@ -1,0 +1,19 @@
+This package is a replacement for the functions of {{npm 'q-io'}} that I use in my projects. I have use `q-io/fs` a lot since it has functions
+like `makeTree`, `listTree` and `removeTree`. Furthermore, its `read` and `write` function work with strings by default, which makes it easier to 
+read text files.
+
+Sadly, `q-io@1` depends on {{npm 'collections'}}@1, which 
+[overwrites the function `Array.prototype.find` with an implementation that does not match the ES6-spec](https://github.com/montagejs/collections/issues/139).
+This causes problems in {{npm 'jsdoc-parse'}}. This is another example of why [modifying objects you don’t own][zakas dont modify]
+is a bad practice.
+
+This problem *could* be solved by using `q-io@2` instead of version 1. This version has [other problems](https://github.com/kriskowal/q-io/pull/155) which were
+solved in version 1. It may be a silly feeling, but version 2 of `q-io` vseems not to receive too much care at the moment.
+
+Since I do not use many functions, I have decided to write a drop-in replacement for my own purposes, and this is it: `m-io`.
+If you like this and want to provide more methods for your needs, please go ahead and make a PR.
+
+
+
+
+[zakas dont modify]: https://www.nczonline.net/blog/2010/03/02/maintainable-javascript-dont-modify-objects-you-down-own/
