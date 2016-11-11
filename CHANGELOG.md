@@ -1,6 +1,11 @@
 # Release notes for `m-io`
 
 <a name="current-release"></a>
+# Version 0.1.1 (Fri, 11 Nov 2016 14:09:16 GMT)
+
+* [007f9f0](https://github.com/nknapp/m-io/commit/007f9f0) Remove console.log - Nils Knappmeier
+
+
 # Version 0.1.0 (Fri, 22 Jul 2016 23:36:27 GMT)
 
 * [40ccb35](https://github.com/nknapp/m-io/commit/40ccb35), 

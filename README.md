@@ -78,7 +78,6 @@ List dirs and files: [ 'city',
   'city/germany/darmstadt.md',
   'city/usa',
   'city/usa/new-york.md' ]
-undefined
 Read file contents: New York is huge
 Done
 ```
@@ -99,7 +98,7 @@ city
 
 <a name="module_fs"></a>
 
-## fs
+### fs
 
 * [fs](#module_fs)
     * [.listTree(directoryPath, filter)](#module_fs.listTree) ⇒ <code>Promise.&lt;Array.&lt;string&gt;&gt;</code>
@@ -108,7 +107,7 @@ city
 
 <a name="module_fs.listTree"></a>
 
-### .listTree(directoryPath, filter) ⇒ <code>Promise.&lt;Array.&lt;string&gt;&gt;</code>
+#### .listTree(directoryPath, filter) ⇒ <code>Promise.&lt;Array.&lt;string&gt;&gt;</code>
 Custom implementation of [q-io/fs#listTree](http://documentup.com/kriskowal/q-io#listtreepath-guardpath-stat)
 to avoid dependency on q-io
 
@@ -122,7 +121,7 @@ to avoid dependency on q-io
 
 <a name="module_fs.makeTree"></a>
 
-### .makeTree(aPath, [mode])
+#### .makeTree(aPath, [mode])
 Replacement for [q-io/fs#makeTree](http://documentup.com/kriskowal/q-io#maketreepath-mode)
 
 **Kind**: static method of <code>[fs](#module_fs)</code>  
@@ -134,7 +133,7 @@ Replacement for [q-io/fs#makeTree](http://documentup.com/kriskowal/q-io#maketree
 
 <a name="module_fs.read"></a>
 
-### .read(aPath)
+#### .read(aPath)
 Replacement for [q-io/fs#read](http://documentup.com/kriskowal/q-io#readpath-options)
 
 **Kind**: static method of <code>[fs](#module_fs)</code>  
