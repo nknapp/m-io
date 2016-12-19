@@ -8,6 +8,17 @@ FS.makeTree('city/germany')
   .then(() => FS.makeTree('city/france'))
   .then(() => FS.write('city/france/paris.md', 'Olala'))
 
+  // Existance of files
+  .then(() => FS.exists('city'))
+  .then((exists) => console.log('Directory city exists?', exists))
+
+  .then(() => FS.exists('something-else'))
+  .then((exists) => console.log('Directory something-else exists?', exists))
+
+  // Directory listings
+  .then(() => FS.list('city'))
+  .then((list) => console.log('Directory entries of city', list.sort()))
+
   // List files
   .then(() => FS.listTree('city', (filename, stats) => stats.isFile()))
   .then((filelist) => console.log('List files:', filelist.sort()))

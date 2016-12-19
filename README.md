@@ -48,6 +48,17 @@ FS.makeTree('city/germany')
   .then(() => FS.makeTree('city/france'))
   .then(() => FS.write('city/france/paris.md', 'Olala'))
 
+  // Existance of files
+  .then(() => FS.exists('city'))
+  .then((exists) => console.log('Directory city exists?', exists))
+
+  .then(() => FS.exists('something-else'))
+  .then((exists) => console.log('Directory something-else exists?', exists))
+
+  // Directory listings
+  .then(() => FS.list('city'))
+  .then((list) => console.log("Directory entries of city", list.sort()))
+
   // List files
   .then(() => FS.listTree('city', (filename, stats) => stats.isFile()))
   .then((filelist) => console.log('List files:', filelist.sort()))
@@ -68,6 +79,9 @@ FS.makeTree('city/germany')
 This will generate the following output
 
 ```
+Directory city exists? true
+Directory something-else exists? false
+Directory entries of city [ 'france', 'germany', 'usa' ]
 List files: [ 'city/france/paris.md',
   'city/germany/darmstadt.md',
   'city/usa/new-york.md' ]
@@ -101,10 +115,24 @@ city
 ## fs
 
 * [fs](#module_fs)
+    * [.exists(existsPath)](#module_fs.exists) ⇒ <code>Promise.&lt;boolean&gt;</code>
     * [.listTree(directoryPath, filter)](#module_fs.listTree) ⇒ <code>Promise.&lt;Array.&lt;string&gt;&gt;</code>
     * [.list(directoryPath)](#module_fs.list) ⇒ <code>Promise.&lt;Array.&lt;string&gt;&gt;</code>
     * [.makeTree(aPath, [mode])](#module_fs.makeTree)
     * [.read(aPath)](#module_fs.read)
+
+<a name="module_fs.exists"></a>
+
+### .exists(existsPath) ⇒ <code>Promise.&lt;boolean&gt;</code>
+Custom implementation of [q-io/fs#exists](http://documentup.com/kriskowal/q-io#lexistsPath)
+to avoid dependency on q-io
+
+**Kind**: static method of <code>[fs](#module_fs)</code>  
+**Returns**: <code>Promise.&lt;boolean&gt;</code> - a promise for the existance (true/false) of the file/dir at the path  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| existsPath | <code>string</code> | the path to check |
 
 <a name="module_fs.listTree"></a>
 
