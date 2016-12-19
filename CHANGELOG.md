@@ -1,6 +1,12 @@
 # Release notes for `m-io`
 
 <a name="current-release"></a>
+# Version 0.2.0 (Mon, 19 Dec 2016 23:32:09 GMT)
+
+* [3014ec6](https://github.com/nknapp/m-io/commit/3014ec6) Add "list" function to "fs.js" module - Nils Knappmeier
+
+
+
 # Version 0.1.1 (Fri, 11 Nov 2016 14:09:16 GMT)
 
 * [007f9f0](https://github.com/nknapp/m-io/commit/007f9f0) Remove console.log - Nils Knappmeier
