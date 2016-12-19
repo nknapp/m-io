@@ -1,6 +1,11 @@
 # Release notes for `m-io`
 
 <a name="current-release"></a>
+# Version 0.3.0 (Mon, 19 Dec 2016 23:50:04 GMT)
+
+* [a2f6d7a](https://github.com/nknapp/m-io/commit/a2f6d7a) Add missing examples - Nils Knappmeier
+* [8618a38](https://github.com/nknapp/m-io/commit/8618a38) Add "exists" function to "fs" module - Nils Knappmeier
+
 # Version 0.2.0 (Mon, 19 Dec 2016 23:32:09 GMT)
 
 * [3014ec6](https://github.com/nknapp/m-io/commit/3014ec6) Add "list" function to "fs.js" module - Nils Knappmeier

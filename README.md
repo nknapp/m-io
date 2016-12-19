@@ -57,7 +57,7 @@ FS.makeTree('city/germany')
 
   // Directory listings
   .then(() => FS.list('city'))
-  .then((list) => console.log("Directory entries of city", list.sort()))
+  .then((list) => console.log('Directory entries of city', list.sort()))
 
   // List files
   .then(() => FS.listTree('city', (filename, stats) => stats.isFile()))

@@ -1,6 +1,6 @@
 {
   "name": "m-io",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "(Incomplete) replacement for q-io",
   "repository": {
     "type": "git",
