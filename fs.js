@@ -17,6 +17,20 @@ var path = require('path')
  */
 module.exports = {
   /**
+   * Custom implementation of [q-io/fs#exists](http://documentup.com/kriskowal/q-io#lexistsPath)
+   * to avoid dependency on q-io
+   * @param {string} existsPath the path to check
+   * @returns {Promise<boolean>} a promise for the existance (true/false) of the file/dir at the path
+   */
+  exists: function list (existsPath) {
+    return new Q.Promise(function (resolve, reject) {
+      fs.access(existsPath, function (err) {
+        resolve(!err)
+      })
+    })
+  },
+
+  /**
    * Custom implementation of [q-io/fs#listTree](http://documentup.com/kriskowal/q-io#listtreepath-guardpath-stat)
    * to avoid dependency on q-io
    * @param {string} directoryPath the base path

@@ -27,6 +27,20 @@ describe('m-io/fs', function () {
     return x.sort()
   }
 
+  describe('the exists function', function () {
+    it('should return true if dir path exists', function () {
+      return mfs.exists('test/fixtures/dir').should.eventually.equal(true)
+    })
+
+    it('should return true if file path exists', function () {
+      return mfs.exists('test/fixtures/dir/file.txt').should.eventually.equal(true)
+    })
+
+    it('should return false if dir path does not exist', function () {
+      return mfs.exists('test/fixtures/no-dir-or-file').should.eventually.equal(false)
+    })
+  })
+
   describe('the list function', function () {
     it('should list all entries in a directory', function () {
       return mfs.list('test/fixtures/dir').then(sort).should.eventually.deep.equal([
