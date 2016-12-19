@@ -23,14 +23,22 @@ chai.use(chaiAsPromised)
 chai.should()
 
 describe('m-io/fs', function () {
-  describe('the list-tree function', function () {
-    var sort = function (x) {
-      return x.sort()
-    }
+  var sort = function (x) {
+    return x.sort()
+  }
 
+  describe('the list function', function () {
+    it('should list all entries in a directory', function () {
+      return mfs.list('test/fixtures/dir').then(sort).should.eventually.deep.equal([
+        'file.txt',
+        'subdir'
+      ])
+    })
+  })
+
+  describe('the list-tree function', function () {
     it('should return a file listing as array', function () {
-      return mfs.listTree('test/fixtures').then(sort).should.eventually.deep.equal([
-        'test/fixtures',
+      return mfs.listTree('test/fixtures/tree').then(sort).should.eventually.deep.equal([
         'test/fixtures/tree',
         'test/fixtures/tree/a',
         'test/fixtures/tree/a/b',
@@ -44,7 +52,7 @@ describe('m-io/fs', function () {
       var filter = function (name, stat) {
         return stat.isFile()
       }
-      return mfs.listTree('test/fixtures', filter).then(sort).should.eventually.deep.equal([
+      return mfs.listTree('test/fixtures/tree', filter).then(sort).should.eventually.deep.equal([
         'test/fixtures/tree/a/b/c.txt',
         'test/fixtures/tree/a/bb/cc.txt'
       ])
@@ -54,8 +62,7 @@ describe('m-io/fs', function () {
       var filter = function (name, stat) {
         return name !== 'test/fixtures/tree/a/bb'
       }
-      return mfs.listTree('test/fixtures', filter).then(sort).should.eventually.deep.equal([
-        'test/fixtures',
+      return mfs.listTree('test/fixtures/tree', filter).then(sort).should.eventually.deep.equal([
         'test/fixtures/tree',
         'test/fixtures/tree/a',
         'test/fixtures/tree/a/b',
@@ -68,8 +75,7 @@ describe('m-io/fs', function () {
       var filter = function (name, stat) {
         return name === 'test/fixtures/tree/a/bb' ? null : true
       }
-      return mfs.listTree('test/fixtures', filter).then(sort).should.eventually.deep.equal([
-        'test/fixtures',
+      return mfs.listTree('test/fixtures/tree', filter).then(sort).should.eventually.deep.equal([
         'test/fixtures/tree',
         'test/fixtures/tree/a',
         'test/fixtures/tree/a/b',

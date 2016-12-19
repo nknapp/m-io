@@ -27,6 +27,17 @@ module.exports = {
   listTree: function listTree (directoryPath, filter) {
     return walk(directoryPath, filter, [])
   },
+
+  /**
+   * Custom implementation of [q-io/fs#list](http://documentup.com/kriskowal/q-io#listpath)
+   * to avoid dependency on q-io
+   * @param {string} directoryPath the base path
+   * @returns {Promise<string[]>} a promise for the collector, that is fulfilled with a list of directory entries
+   */
+  list: function list (directoryPath) {
+    return Q.ninvoke(fs, 'readdir', directoryPath)
+  },
+
   /**
    * Replacement for [q-io/fs#makeTree](http://documentup.com/kriskowal/q-io#maketreepath-mode)
    * @param {string} aPath the directory to be created
@@ -35,9 +46,11 @@ module.exports = {
   makeTree: function makeTree (aPath, mode) {
     return Q.nfcall(require('mkdirp'), aPath, {mode: mode})
   },
+
   removeTree: function removeTree (aPath) {
     return Q.nfcall(require('rimraf'), aPath)
   },
+
   /**
    * Replacement for [q-io/fs#read](http://documentup.com/kriskowal/q-io#readpath-options)
    * @param aPath
