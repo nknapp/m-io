@@ -123,7 +123,7 @@ city
 
 <a name="module_fs.exists"></a>
 
-### .exists(existsPath) ⇒ <code>Promise.&lt;boolean&gt;</code>
+### fs.exists(existsPath) ⇒ <code>Promise.&lt;boolean&gt;</code>
 Custom implementation of [q-io/fs#exists](http://documentup.com/kriskowal/q-io#lexistsPath)
 to avoid dependency on q-io
 
@@ -136,7 +136,7 @@ to avoid dependency on q-io
 
 <a name="module_fs.listTree"></a>
 
-### .listTree(directoryPath, filter) ⇒ <code>Promise.&lt;Array.&lt;string&gt;&gt;</code>
+### fs.listTree(directoryPath, filter) ⇒ <code>Promise.&lt;Array.&lt;string&gt;&gt;</code>
 Custom implementation of [q-io/fs#listTree](http://documentup.com/kriskowal/q-io#listtreepath-guardpath-stat)
 to avoid dependency on q-io
 
@@ -150,7 +150,7 @@ to avoid dependency on q-io
 
 <a name="module_fs.list"></a>
 
-### .list(directoryPath) ⇒ <code>Promise.&lt;Array.&lt;string&gt;&gt;</code>
+### fs.list(directoryPath) ⇒ <code>Promise.&lt;Array.&lt;string&gt;&gt;</code>
 Custom implementation of [q-io/fs#list](http://documentup.com/kriskowal/q-io#listpath)
 to avoid dependency on q-io
 
@@ -163,7 +163,7 @@ to avoid dependency on q-io
 
 <a name="module_fs.makeTree"></a>
 
-### .makeTree(aPath, [mode])
+### fs.makeTree(aPath, [mode])
 Replacement for [q-io/fs#makeTree](http://documentup.com/kriskowal/q-io#maketreepath-mode)
 
 **Kind**: static method of <code>[fs](#module_fs)</code>  
@@ -175,7 +175,7 @@ Replacement for [q-io/fs#makeTree](http://documentup.com/kriskowal/q-io#maketree
 
 <a name="module_fs.read"></a>
 
-### .read(aPath)
+### fs.read(aPath)
 Replacement for [q-io/fs#read](http://documentup.com/kriskowal/q-io#readpath-options)
 
 **Kind**: static method of <code>[fs](#module_fs)</code>  

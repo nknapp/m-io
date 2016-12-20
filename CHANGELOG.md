@@ -1,6 +1,10 @@
 # Release notes for `m-io`
 
 <a name="current-release"></a>
+# Version 0.3.1 (Tue, 20 Dec 2016 00:01:59 GMT)
+
+* [71da3f0](https://github.com/nknapp/m-io/commit/71da3f0) Fix: listTree must return an empty array if the directory does not exists - Nils Knappmeier
+
 # Version 0.3.0 (Mon, 19 Dec 2016 23:50:04 GMT)
 
 * [a2f6d7a](https://github.com/nknapp/m-io/commit/a2f6d7a) Add missing examples - Nils Knappmeier
