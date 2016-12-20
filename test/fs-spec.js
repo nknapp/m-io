@@ -51,6 +51,10 @@ describe('m-io/fs', function () {
   })
 
   describe('the list-tree function', function () {
+    it('should return an empty array if the directory does not exist', function () {
+      return mfs.listTree('test/fixtures/no-directory').should.eventually.deep.equal([])
+    })
+
     it('should return a file listing as array', function () {
       return mfs.listTree('test/fixtures/tree').then(sort).should.eventually.deep.equal([
         'test/fixtures/tree',

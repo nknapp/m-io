@@ -128,6 +128,10 @@ function walk (directoryPath, filter, collector) {
   var defer = Q.defer()
   fs.stat(directoryPath, function (err, stat) {
     if (err) {
+      if (err.code === 'ENOENT') {
+        // Like q-io/fs, return an empty array, if the directory does not exist
+        return defer.resolve([])
+      }
       return defer.reject(err)
     }
     // Call filter to get result, "true" if no filter is set
