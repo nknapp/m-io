@@ -58,7 +58,7 @@ module.exports = {
    * @param {number=} mode (e.g. 0644)
    */
   makeTree: function makeTree (aPath, mode) {
-    return Q.nfcall(require('mkdirp'), aPath, {mode: mode})
+    return Q.nfcall(require('mkdirp'), aPath, { mode: mode })
   },
 
   removeTree: function removeTree (aPath) {
@@ -93,8 +93,19 @@ module.exports = {
 
   stat: function stat (aPath) {
     return Q.ninvoke(fs, 'stat', aPath)
-  }
+  },
 
+  isDirectory: function isDirectory (directory) {
+    return this.stat(directory)
+      .then(
+        function (stat) {
+          return stat.isDirectory()
+        },
+        function () {
+          return false
+        }
+      )
+  }
 }
 
 /**

@@ -169,6 +169,18 @@ describe('m-io/fs', function () {
       }).should.eventually.be.false
     })
   })
+
+  describe('the isDirectory-function', function () {
+    it('should return true for directories', function () {
+      return mfs.isDirectory('test').should.eventually.be.true
+    })
+    it('should return false for non-directories', function () {
+      return mfs.isDirectory('package.json').should.eventually.be.false
+    })
+    it('should return false if there is neither a file nor a directory there', function () {
+      return mfs.isDirectory('test2/test2').should.eventually.be.false
+    })
+  })
 })
 
 /**

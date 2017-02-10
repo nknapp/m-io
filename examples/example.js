@@ -15,6 +15,16 @@ FS.makeTree('city/germany')
   .then(() => FS.exists('something-else'))
   .then((exists) => console.log('Directory something-else exists?', exists))
 
+  // Checking for directories
+  .then(() => FS.isDirectory('city/germany'))
+  .then((isDirectory) => console.log('Is `city/germany` a directory?', isDirectory))
+
+  .then(() => FS.isDirectory('city/germany/darmstadt.md'))
+  .then((isDirectory) => console.log('Is `city/germany/darmstadt.md` a directory?', isDirectory))
+
+  .then(() => FS.isDirectory('city/germany/non-existing-file'))
+  .then((isDirectory) => console.log('Is `city/germany/non-existing-file` a directory?', isDirectory))
+
   // Directory listings
   .then(() => FS.list('city'))
   .then((list) => console.log('Directory entries of city', list.sort()))
