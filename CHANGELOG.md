@@ -1,6 +1,11 @@
 # Release notes for `m-io`
 
 <a name="current-release"></a>
+# Version 0.4.0 (Mon, 13 Feb 2017 22:59:01 GMT)
+
+* [932d674](https://github.com/nknapp/m-io/commit/932d674) Add function `.isDirectory()` - Nils Knappmeier
+* [4b12e8f](https://github.com/nknapp/m-io/commit/4b12e8f) Remove Node 0.10 and 5 from TravisCI and add 7 - Nils Knappmeier
+
 # Version 0.3.1 (Tue, 20 Dec 2016 00:01:59 GMT)
 
 * [71da3f0](https://github.com/nknapp/m-io/commit/71da3f0) Fix: listTree must return an empty array if the directory does not exists - Nils Knappmeier
