@@ -76,10 +76,20 @@ module.exports = {
     })
   },
 
+  /**
+   * Replacement for [q-io/fs#write](http://documentup.com/kriskowal/q-io#writepath-content-options)
+   * @param aPath
+   * @param content
+   */
   write: function write (aPath, content) {
     return Q.ninvoke(fs, 'writeFile', aPath, content)
   },
 
+  /**
+   * Replacement for [q-io/fs#copy](http://documentup.com/kriskowal/q-io#copysource-target)
+   * @param source
+   * @param target
+   */
   copy: function copy (source, target) {
     var defer = Q.defer()
     fs.createReadStream(source)
@@ -91,14 +101,27 @@ module.exports = {
     return defer.promise
   },
 
+  /**
+   * Replacement for [q-io/fs#copyTree](http://documentup.com/kriskowal/q-io#copytreesource-target)
+   * @param source
+   * @param target
+   */
   copyTree: function copyTree (source, target) {
     return Q.nfcall(fs.copy, source, target)
   },
 
+  /**
+   * Replacement for [q-io/fs#stat](http://documentup.com/kriskowal/q-io#statpath)
+   * @param aPath
+   */
   stat: function stat (aPath) {
     return Q.ninvoke(fs, 'stat', aPath)
   },
 
+  /**
+   * Replacement for [q-io/fs#isDirectory](http://documentup.com/kriskowal/q-io#isdirectorypath)
+   * @param directory
+   */
   isDirectory: function isDirectory (directory) {
     return this.stat(directory)
       .then(
