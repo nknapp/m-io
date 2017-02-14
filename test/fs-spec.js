@@ -14,7 +14,7 @@
 'use strict'
 
 var mfs = require('../fs.js')
-var fs = require('fs')
+var fs = require('fs-extra')
 var Q = require('q')
 
 var chai = require('chai')
@@ -112,14 +112,14 @@ describe('m-io/fs', function () {
     })
 
     it('should read the file contents as Buffer in binary mode (options-object)', function () {
-      return mfs.read('test/fixtures/tree/a/b/c.txt', {flags: 'b'}).should.eventually.deep.equal(new Buffer('c', 'utf-8'))
+      return mfs.read('test/fixtures/tree/a/b/c.txt', { flags: 'b' }).should.eventually.deep.equal(new Buffer('c', 'utf-8'))
     })
   })
 
   describe('the write function', function () {
     beforeEach(function () {
-      require('rimraf').sync('tmp/test')
-      require('mkdirp').sync('tmp/test')
+      fs.removeSync('tmp/test')
+      fs.mkdirsSync('tmp/test')
     })
     it('should write the file contents', function () {
       return mfs.write('tmp/test/a.txt', 'a').then(function () {
@@ -136,8 +136,8 @@ describe('m-io/fs', function () {
 
   describe('the makeTree-function', function () {
     beforeEach(function () {
-      require('rimraf').sync('tmp/test')
-      require('mkdirp').sync('tmp/test')
+      fs.removeSync('tmp/test')
+      fs.mkdirsSync('tmp/test')
     })
     it('should create a directory with parents', function () {
       return mfs.makeTree('tmp/test/make/tree/directory').then(function () {
@@ -161,7 +161,7 @@ describe('m-io/fs', function () {
 
   describe('the removeTree-function', function () {
     beforeEach(function () {
-      require('mkdirp').sync('tmp/test/remove/tree/directory')
+      fs.mkdirsSync('tmp/test/remove/tree/directory')
     })
     it('should create a directory with parents', function () {
       return mfs.removeTree('tmp/test/remove').then(function () {
@@ -181,6 +181,31 @@ describe('m-io/fs', function () {
       return mfs.isDirectory('test2/test2').should.eventually.be.false
     })
   })
+
+  describe('the copyTree-function', function () {
+    it('should copy a complete directore path', function () {
+      return mfs.copyTree('test/fixtures/dir', 'tmp/test/copytree/dir')
+        .then(function () {
+          const dirs = ['dir', 'dir/subdir']
+          const files = ['dir/subdir/donotdelete.txt', 'dir/file.txt']
+          dirs.forEach(function (dir) {
+            fs.readdirSync('tmp/test/copytree/' + dir)
+              .should.deep.equal(fs.readdirSync('test/fixtures/' + dir),
+              'Checking contents of directory ' + dir)
+          })
+          files.concat(dirs).forEach(function (file) {
+            fs.statSync('tmp/test/copytree/' + file).mode
+              .should.deep.equal(fs.statSync('test/fixtures/' + file).mode,
+              'Checking mode of ' + file)
+          })
+          files.forEach(function (file) {
+            fs.readFileSync('tmp/test/copytree/' + file)
+              .should.deep.equal(fs.readFileSync('test/fixtures/' + file),
+              'Checking contents of file ' + file)
+          })
+        })
+    })
+  })
 })
 
 /**
@@ -188,5 +213,5 @@ describe('m-io/fs', function () {
  * @param path
  */
 function readSync (path) {
-  return fs.readFileSync(path, {encoding: 'utf-8'})
+  return fs.readFileSync(path, { encoding: 'utf-8' })
 }

@@ -7,7 +7,7 @@
 
 'use strict'
 
-var fs = require('fs')
+var fs = require('fs-extra')
 var Q = require('q')
 var path = require('path')
 
@@ -58,11 +58,11 @@ module.exports = {
    * @param {number=} mode (e.g. 0644)
    */
   makeTree: function makeTree (aPath, mode) {
-    return Q.nfcall(require('mkdirp'), aPath, { mode: mode })
+    return Q.nfcall(fs.mkdirs, aPath, { mode: mode })
   },
 
   removeTree: function removeTree (aPath) {
-    return Q.nfcall(require('rimraf'), aPath)
+    return Q.nfcall(fs.remove, aPath)
   },
 
   /**
@@ -89,6 +89,10 @@ module.exports = {
       .on('finish', defer.fulfill.bind(defer))
 
     return defer.promise
+  },
+
+  copyTree: function copyTree (source, target) {
+    return Q.nfcall(fs.copy, source, target)
   },
 
   stat: function stat (aPath) {
