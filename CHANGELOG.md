@@ -1,6 +1,11 @@
 # Release notes for `m-io`
 
 <a name="current-release"></a>
+# Version 0.5.0 (Tue, 14 Feb 2017 23:01:51 GMT)
+
+* [9680ac7](https://github.com/nknapp/m-io/commit/9680ac7) Add missing jsdoc-comments - Nils Knappmeier
+* [32500cf](https://github.com/nknapp/m-io/commit/32500cf) Add function "copyTree" - Nils Knappmeier
+
 # Version 0.4.0 (Mon, 13 Feb 2017 22:59:01 GMT)
 
 * [932d674](https://github.com/nknapp/m-io/commit/932d674) Add function `.isDirectory()` - Nils Knappmeier

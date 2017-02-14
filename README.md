@@ -133,6 +133,11 @@ city
     * [.list(directoryPath)](#module_fs.list) ⇒ <code>Promise.&lt;Array.&lt;string&gt;&gt;</code>
     * [.makeTree(aPath, [mode])](#module_fs.makeTree)
     * [.read(aPath)](#module_fs.read)
+    * [.write(aPath, content)](#module_fs.write)
+    * [.copy(source, target)](#module_fs.copy)
+    * [.copyTree(source, target)](#module_fs.copyTree)
+    * [.stat(aPath)](#module_fs.stat)
+    * [.isDirectory(directory)](#module_fs.isDirectory)
 
 <a name="module_fs.exists"></a>
 
@@ -196,6 +201,64 @@ Replacement for [q-io/fs#read](http://documentup.com/kriskowal/q-io#readpath-opt
 | Param |
 | --- |
 | aPath | 
+
+<a name="module_fs.write"></a>
+
+### fs.write(aPath, content)
+Replacement for [q-io/fs#write](http://documentup.com/kriskowal/q-io#writepath-content-options)
+
+**Kind**: static method of <code>[fs](#module_fs)</code>  
+
+| Param |
+| --- |
+| aPath | 
+| content | 
+
+<a name="module_fs.copy"></a>
+
+### fs.copy(source, target)
+Replacement for [q-io/fs#copy](http://documentup.com/kriskowal/q-io#copysource-target)
+
+**Kind**: static method of <code>[fs](#module_fs)</code>  
+
+| Param |
+| --- |
+| source | 
+| target | 
+
+<a name="module_fs.copyTree"></a>
+
+### fs.copyTree(source, target)
+Replacement for [q-io/fs#copyTree](http://documentup.com/kriskowal/q-io#copytreesource-target)
+
+**Kind**: static method of <code>[fs](#module_fs)</code>  
+
+| Param |
+| --- |
+| source | 
+| target | 
+
+<a name="module_fs.stat"></a>
+
+### fs.stat(aPath)
+Replacement for [q-io/fs#stat](http://documentup.com/kriskowal/q-io#statpath)
+
+**Kind**: static method of <code>[fs](#module_fs)</code>  
+
+| Param |
+| --- |
+| aPath | 
+
+<a name="module_fs.isDirectory"></a>
+
+### fs.isDirectory(directory)
+Replacement for [q-io/fs#isDirectory](http://documentup.com/kriskowal/q-io#isdirectorypath)
+
+**Kind**: static method of <code>[fs](#module_fs)</code>  
+
+| Param |
+| --- |
+| directory | 
 
 
 
