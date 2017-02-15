@@ -186,8 +186,8 @@ describe('m-io/fs', function () {
     it('should copy a complete directore path', function () {
       return mfs.copyTree('test/fixtures/dir', 'tmp/test/copytree/dir')
         .then(function () {
-          const dirs = ['dir', 'dir/subdir']
-          const files = ['dir/subdir/donotdelete.txt', 'dir/file.txt']
+          var dirs = ['dir', 'dir/subdir']
+          var files = ['dir/subdir/donotdelete.txt', 'dir/file.txt']
           dirs.forEach(function (dir) {
             fs.readdirSync('tmp/test/copytree/' + dir)
               .should.deep.equal(fs.readdirSync('test/fixtures/' + dir),
